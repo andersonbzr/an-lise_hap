@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relatório de Avaliação - Auxiliares de Farmácia</title>
+  <style>
+    :root {
+      --azul-hapvida: #175fc5;
+      --laranja-hapvida: #f37021;
+      --cinza-bg: #f5f8fc;
+      --branco: #fff;
+    }
+    body {
+      background: var(--cinza-bg);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .container {
+      background: var(--branco);
+      margin: 40px 0 40px 0;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #0002;
+      padding: 38px 32px 32px 32px;
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: var(--azul-hapvida);
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 14px;
+      color: var(--azul-hapvida);
+      display: block;
+    }
+    .criterio {
+      margin: 24px 0 18px 0;
+      background: #eaf1fb;
+      border-radius: 10px;
+      padding: 18px 16px 10px 16px;
+      width: 100%;
+    }
+    .criterio h2 {
+      color: var(--azul-hapvida);
+      font-size: 1.1rem;
+      margin: 0 0 3px 0;
+    }
+    .criterio em {
+      font-size: 0.97rem;
+      color: #555;
+    }
+    .pergunta {
+      margin: 10px 0 0 0;
+      font-size: 1rem;
+      color: #222;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 7px;
+      margin-top: 5px;
+      border: 1px solid #c5d3ef;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fafdff;
+      transition: border 0.2s;
+    }
+    select:focus, input[type="text"]:focus, textarea:focus {
+      border: 1.5px solid var(--azul-hapvida);
+      outline: none;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    button {
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      background: var(--laranja-hapvida);
+      color: var(--branco);
+      border: none;
+      border-radius: 7px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 6px #0001;
+      min-width: 140px;
+    }
+    button:hover:enabled {
+      background: #d65e17;
+    }
+    #btnDownload {
+      background: var(--azul-hapvida);
+    }
+    #btnDownload:hover:enabled {
+      background: #0f4ca8;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .faixa {
+      background: #eaf1fb;
+      color: #222;
+      border-left: 5px solid var(--azul-hapvida);
+      padding: 13px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      width: 100%;
+      font-size: 1rem;
+    }
+    pre {
+      background: #fafdff;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-top: 25px;
+      overflow-x: auto;
+      border: 1.5px solid #eaf1fb;
+      color: #222;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 150px;
+      width: 100%;
+    }
+    .interpretacao {
+      margin: 30px 0 0 0;
+      background: #fff5e6;
+      border-left: 5px solid var(--laranja-hapvida);
+      padding: 13px 18px;
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 100%;
+      color: #333;
+    }
+    .botoes {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 26px;
+      width: 100%;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 18px 6vw 20px 6vw; }
+      pre, .faixa, .interpretacao { font-size: 0.97rem; }
+      .botoes {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .botoes button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Relatório de Avaliação</h1>
+    <div class="faixa">
+      <b>Instruções:</b><br>
+      Para cada pergunta, marque a opção que melhor reflete o desempenho do auxiliar avaliado, utilizando a seguinte escala:<br>
+      <b>1</b> – Discordo Totalmente (Nunca ou quase nunca acontece) &nbsp; | &nbsp;
+      <b>2</b> – Discordo (Acontece raramente) &nbsp; | &nbsp;
+      <b>3</b> – Neutro (Acontece às vezes) &nbsp; | &nbsp;
+      <b>4</b> – Concordo (Acontece com frequência) &nbsp; | &nbsp;
+      <b>5</b> – Concordo Totalmente (Sempre acontece, sem exceções)
+    </div>
+    <form id="formAval">
+      <label for="nome">Nome do Colaborador:</label>
+      <input type="text" id="nome" required />
+
+      <label for="setor">Setor:</label>
+      <input type="text" id="setor" required />
+
+      <!-- Critério 1 -->
+      <div class="criterio">
+        <h2>1. Domínio Técnico do Sistema e Processos</h2>
+        <em>Critério: Compreensão das funcionalidades do sistema e dos fluxos operacionais (SAP, SIGO, SIGA).</em>
+        <div class="pergunta">Demonstra domínio das funcionalidades do sistema e dos processos operacionais?
+          <select id="dominio1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Consegue responder dúvidas dos novatos de forma clara e objetiva?
+          <select id="dominio2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Ele se mantém atualizado sobre mudanças no sistema?
+          <select id="dominio3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Ele utiliza exemplos práticos para facilitar o aprendizado?
+          <select id="dominio4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 2 -->
+      <div class="criterio">
+        <h2>2. Habilidade de Mentoria e Treinamento</h2>
+        <em>Critério: Capacidade de orientar os novatos, facilitando a assimilação das informações.</em>
+        <div class="pergunta">Utiliza uma linguagem clara e acessível para explicar conceitos e procedimentos?
+          <select id="mentoria1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Demonstra paciência e reformula explicações quando necessário?
+          <select id="mentoria2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Adota demonstrações práticas ou simulações para facilitar o aprendizado?
+          <select id="mentoria3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Adapta o treinamento ao nível de conhecimento dos novatos?
+          <select id="mentoria4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 3 -->
+      <div class="criterio">
+        <h2>3. Comunicação e Relacionamento Interpessoal</h2>
+        <em>Critério: Efetividade na comunicação e construção de relações de confiança.</em>
+        <div class="pergunta">Consegue estabelecer uma relação de confiança e respeito com os novatos?
+          <select id="comunicacao1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Adapta sua comunicação para diferentes perfis de novatos?
+          <select id="comunicacao2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Gerencia conflitos ou dúvidas persistentes de forma eficaz?
+          <select id="comunicacao3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Facilita a integração do time, promovendo um ambiente colaborativo?
+          <select id="comunicacao4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 4 -->
+      <div class="criterio">
+        <h2>4. Capacidade de Identificar e Solucionar Dúvidas e Problemas</h2>
+        <em>Critério: Proatividade em identificar dificuldades e oferecer soluções.</em>
+        <div class="pergunta">Percebe quando um novato tem dificuldades e intervém de forma assertiva?
+          <select id="solucao1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Propõe soluções práticas para problemas comuns?
+          <select id="solucao2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Busca referências ou suporte adicional para dúvidas mais complexas?
+          <select id="solucao3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Demonstra visão preventiva ao antecipar possíveis problemas?
+          <select id="solucao4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 5 -->
+      <div class="criterio">
+        <h2>5. Feedback e Melhoria Contínua</h2>
+        <em>Critério: Disposição para receber e aplicar feedbacks para aprimoramento constante.</em>
+        <div class="pergunta">Solicita feedback regularmente dos novatos e gestores?
+          <select id="feedback1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Utiliza feedbacks para ajustar seu método de ensino?
+          <select id="feedback2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Demonstra abertura para reconhecer e melhorar sua abordagem?
+          <select id="feedback3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Implementa ações concretas com base nos feedbacks recebidos?
+          <select id="feedback4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 6 -->
+      <div class="criterio">
+        <h2>6. Liderança e Proatividade</h2>
+        <em>Critério: Capacidade de assumir a liderança quando necessário, motivar a equipe e garantir que os processos ocorram de forma eficiente.</em>
+        <div class="pergunta">Assume a responsabilidade e lidera os novos auxiliares com segurança e autoridade?
+          <select id="lideranca1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Demonstra iniciativa para resolver problemas sem depender apenas da gestão?
+          <select id="lideranca2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Sabe delegar tarefas de forma eficiente, garantindo que todos participem do processo?
+          <select id="lideranca3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Consegue manter a equipe focada e motivada durante toda a operação assistida?
+          <select id="lideranca4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <!-- Critério 7 -->
+      <div class="criterio">
+        <h2>7. Controle emocional e Gestão de Estresse</h2>
+        <em>Critério: Capacidade de manter a calma, tomar decisões equilibradas e lidar com momentos de pressão no ambiente hospitalar.</em>
+        <div class="pergunta">O auxiliar mantém a calma mesmo diante de situações de estresse ou alta demanda?
+          <select id="controle1" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Consegue lidar com dificuldades dos novatos sem demonstrar impaciência ou frustração?
+          <select id="controle2" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Controla bem suas emoções e evita conflitos desnecessários com as equipes (farmácia, enfermagem, TI, etc)?
+          <select id="controle3" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+        <div class="pergunta">Mantém uma postura profissional e equilibrada, independentemente do cenário?
+          <select id="controle4" required><option value="">Selecione</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </div>
+      </div>
+
+      <label for="comentarios">Comentários Finais:</label>
+      <textarea id="comentarios" rows="4" placeholder="Observações adicionais sobre o desempenho do auxiliar."></textarea>
+
+      <div class="botoes">
+        <button type="submit" id="btnGerar">Gerar Relatório</button>
+        <button type="button" id="btnDownload" disabled>Baixar Relatório em Word</button>
+      </div>
+    </form>
+
+    <pre id="relatorio"></pre>
+
+    <div class="interpretacao">
+      <b>Faixa de Interpretação da Pontuação:</b><br>
+      18 - 20 pontos: <span style="color:var(--azul-hapvida)">Excelente 🌟</span><br>
+      15 - 17 pontos: <span style="color:var(--azul-hapvida)">Bom 👍</span><br>
+      12 - 14 pontos: <span style="color:var(--laranja-hapvida)">Razoável (precisa melhorar) ⚠️</span><br>
+      10 - 11 pontos: <span style="color:#cf3c00">Fraco (grandes melhorias necessárias) 🚨</span><br>
+      Menos de 10 pontos: <span style="color:#cf3c00">Muito Fraco (nível crítico) ❌</span>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('formAval');
+    const relatorioEl = document.getElementById('relatorio');
+    const btnDownload = document.getElementById('btnDownload');
+    let relatorioGerado = '';
+    let nomeColaborador = '';
+
+    const interpretacaoFaixa = (pontos) => {
+      if (pontos >= 18) return 'Excelente 🌟';
+      if (pontos >= 15) return 'Bom 👍';
+      if (pontos >= 12) return 'Razoável (precisa melhorar) ⚠️';
+      if (pontos >= 10) return 'Fraco (grandes melhorias necessárias) 🚨';
+      return 'Muito Fraco (nível crítico) ❌';
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      nomeColaborador = document.getElementById('nome').value.trim();
+      const setor = document.getElementById('setor').value.trim();
+      const comentarios = document.getElementById('comentarios').value.trim();
+
+      const somaCrit = (ids) => ids.reduce((acc, id) => acc + parseInt(document.getElementById(id).value), 0);
+
+      const criterios = [
+        { nome: 'Domínio Técnico do Sistema e Processos', ids: ['dominio1','dominio2','dominio3','dominio4'] },
+        { nome: 'Habilidade de Mentoria e Treinamento', ids: ['mentoria1','mentoria2','mentoria3','mentoria4'] },
+        { nome: 'Comunicação e Relacionamento Interpessoal', ids: ['comunicacao1','comunicacao2','comunicacao3','comunicacao4'] },
+        { nome: 'Capacidade de Identificar e Solucionar Dúvidas e Problemas', ids: ['solucao1','solucao2','solucao3','solucao4'] },
+        { nome: 'Feedback e Melhoria Contínua', ids: ['feedback1','feedback2','feedback3','feedback4'] },
+        { nome: 'Liderança e Proatividade', ids: ['lideranca1','lideranca2','lideranca3','lideranca4'] },
+        { nome: 'Controle emocional e Gestão de Estresse', ids: ['controle1','controle2','controle3','controle4'] },
+      ];
+
+      let pontuacoes = [];
+
+      criterios.forEach(c => {
+        const pontos = somaCrit(c.ids);
+        pontuacoes.push({ nome: c.nome, pontos, interpretacao: interpretacaoFaixa(pontos) });
+      });
+
+      const pontosFortes = pontuacoes.filter(p => p.pontos >= 18);
+      const pontosMelhorar = pontuacoes.filter(p => p.pontos < 15);
+
+      // Monta tabela HTML
+      let tabelaHTML = `<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; font-family: Arial, sans-serif; font-size:14pt; color:#175fc5; width: 100%;">`;
+      tabelaHTML += `<thead><tr style="background-color:#eaf1fb;"><th>Critério</th><th>Pontuação</th><th>Interpretação</th></tr></thead><tbody>`;
+      pontuacoes.forEach(p => {
+        tabelaHTML += `<tr><td>${p.nome}</td><td style="text-align:center;">${p.pontos}</td><td>${p.interpretacao}</td></tr>`;
+      });
+      tabelaHTML += `</tbody></table>`;
+
+      // Monta o relatório em HTML
+      relatorioGerado = `
+        <h1 style="color:#175fc5;">Relatório de Avaliação - Auxiliares de Farmácia Hospitalar</h1>
+        <p><strong>Nome do Colaborador:</strong> ${nomeColaborador}<br>
+        <strong>Setor:</strong> ${setor}</p>
+        <h2 style="color:#175fc5;">Resumo da Pontuação</h2>
+        ${tabelaHTML}
+        <h2 style="color:#175fc5;">Principais Pontos Fortes</h2>
+        <ul>
+          ${pontosFortes.length === 0 ? '<li>Nenhum ponto forte destacado.</li>' : pontosFortes.map(p => `<li>${p.nome}: desempenho excelente que contribui significativamente para o setor.</li>`).join('')}
+        </ul>
+        <h2 style="color:#175fc5;">Pontos de Atenção e Oportunidades de Desenvolvimento</h2>
+        <ul>
+          ${pontosMelhorar.length === 0 ? '<li>Nenhum ponto crítico identificado.</li>' : pontosMelhorar.map(p => `<li>${p.nome}: necessita de melhorias para alcançar a excelência.</li>`).join('')}
+        </ul>
+        <h2 style="color:#175fc5;">Comentários Finais</h2>
+        <p>${comentarios ? comentarios : 'Nenhum comentário adicional.'}</p>
+      `;
+
+      relatorioEl.innerHTML = relatorioGerado;
+      btnDownload.disabled = false;
+    });
+
+    btnDownload.addEventListener('click', () => {
+      if (!relatorioGerado) return;
+
+      const header = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+              xmlns:w='urn:schemas-microsoft-com:office:word' 
+              xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><title>Relatório de Avaliação</title></head><body>`;
+      const footer = `</body></html>`;
+
+      const sourceHTML = header + relatorioGerado + footer;
+
+      const blob = new Blob(['\ufeff', sourceHTML], {
+        type: 'application/msword'
+      });
+
+      const filename = `Relatorio_Avaliacao_${nomeColaborador.replace(/\s+/g, '_') || 'colaborador'}.doc`;
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 0);
+      }
+    });
+  </script>
+</body>
+</html>
